@@ -9,3 +9,19 @@ class HomeView(View):
 
     def get(self, request: HttpRequest) -> render:
         return render(request, self.template_name)
+
+
+# "/about"
+class AboutView(View):
+    template_name = "about.html"
+
+    def get(self, request: HttpRequest) -> render:
+        return render(request, self.template_name)
+
+
+# "/contact"
+class ContactView(View):
+    template_name = "contact.html"
+
+    def get(self, request: HttpRequest) -> render:
+        return render(request, self.template_name)
