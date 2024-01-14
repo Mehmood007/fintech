@@ -1,8 +1,9 @@
 import logging
+from typing import Any
 
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpRequest
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.views import View
 
@@ -53,7 +54,7 @@ class RegistrationView(View):
 class LogInView(View):
     template_name = "userauths/login.html"
 
-    def dispatch(self, request: HttpRequest, *args, **kwargs) -> super or redirect:
+    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
         if request.user.is_authenticated:
             messages.warning(request, "You are already logged in")
             return redirect("home")
