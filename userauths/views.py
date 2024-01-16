@@ -79,9 +79,7 @@ class LogInView(View):
 
 # "/user/logout"
 class LogoutView(View):
-    template_name = "home.html"
-
     def get(self, request: HttpRequest) -> render:
         logout(request)
         messages.success(request, "You have been logged out successfully")
-        return render(request, self.template_name)
+        return redirect("home")
