@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "core",
     "userauths",
+    "account",
 ]
 
 MIDDLEWARE = [
@@ -110,6 +111,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTH_USER_MODEL = "userauths.User"
+
+LOGIN_URL = "/user/login"
 
 
 # Logger settings
