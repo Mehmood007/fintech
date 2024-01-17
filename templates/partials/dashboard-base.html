@@ -132,20 +132,25 @@
                             <div class="single-item user-area">
                                 <div class="profile-area d-flex align-items-center">
                                     <span class="user-profile">
-                                        <img src="{% static 'assets1/images/avatar.png' %}" alt="User">
+                                        <img src="{% if user.kyc %}{{user.kyc.image.url}}{% else %}{% static 'assets1/images/default.jpg' %}{% endif %}"
+                                            style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;"
+                                            alt="User">
                                     </span>
                                     <i class="fa-solid fa-sort-down"></i>
                                 </div>
                                 <div class="main-area user-content">
                                     <div class="head-area d-flex align-items-center">
                                         <div class="profile-img">
-                                            <img src="{% static 'assets1/images/avatar-2.png' %}" alt="User">
+                                            <img src="{% if user.kyc %}{{user.kyc.image.url}}{% else %}{% static 'assets1/images/default.jpg' %}{% endif %}"
+                                                style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover;"
+                                                alt="User">
                                         </div>
                                         <div class="profile-head">
-                                            <a href="javascript:void(0)">
-                                                <h5>Kevin Martin</h5>
+                                            <a href="{% url 'account' %}">
+                                                <h5>{{kyc.full_name}}</h5>
                                             </a>
-                                            <p class="wallet-id">Wallet ID: 6264849965</p>
+                                            <p class="wallet-id">Account: {{user.account.account_number}}</p>
+                                            <p class="wallet-id">Pin: {{user.account.pin_number}}</p>
                                         </div>
                                     </div>
                                     <ul>
@@ -169,7 +174,7 @@
                         </div>
                         <ul>
                             <li>
-                                <a href="dashboard.html">
+                                <a href="{% url 'account' %}">
                                     <img src="{% static 'assets1/images/icon/dashboard.png' %}" alt="Dashboard">
                                     <span>Dashboard</span>
                                 </a>
@@ -225,7 +230,7 @@
                         </ul>
                         <ul class="bottom-item">
                             <li class="active">
-                                <a href="account.html">
+                                <a href="{% url 'account' %}">
                                     <img src="{% static 'assets1/images/icon/account.png' %}" alt="Account">
                                     <span>Account</span>
                                 </a>
