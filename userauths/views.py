@@ -40,7 +40,7 @@ class RegistrationView(View):
             )
             login(request, new_user)
             messages.success(request, "Successfully Signed Up")
-            return redirect("home")
+            return redirect("account")
 
         messages.error(request, "Failed to register account")
         logger.error(form.errors)
@@ -71,7 +71,7 @@ class LogInView(View):
         if user:
             messages.success(request, "Successfully logged in")
             login(request, user)
-            return redirect("home")
+            return redirect("account")
         else:
             messages.error(request, "Failed to register account")
             return render(request, self.template_name)
