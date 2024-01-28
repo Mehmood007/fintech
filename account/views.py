@@ -10,6 +10,8 @@ from django.shortcuts import redirect, render
 from django.utils.decorators import method_decorator
 from django.views import View
 
+from fintech.utils import KYCExistsMixin
+
 from .forms import KYCForm
 from .models import KYC, Account
 
@@ -18,17 +20,9 @@ logger = logging.getLogger("custom_logger")
 
 # "/account"
 @method_decorator(login_required, name="dispatch")
-class AccountView(View):
-    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
-        try:
-            self.kyc = KYC.objects.get(user=request.user)
-        except:
-            messages.warning(request, "Please Fill out KYC form")
-            return redirect("kyc-registration")
-        self.account = Account.objects.get(user=request.user)
-        return super().dispatch(request, *args, **kwargs)
-
+class AccountView(KYCExistsMixin, View):
     def get(self, request: HttpRequest) -> render:
+        self.account = Account.objects.get(user=request.user)
         context = {
             "account": self.account,
             "kyc": self.kyc,

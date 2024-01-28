@@ -7,22 +7,17 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.views import View
 
+from fintech.utils import NotLoggedInMixin
+
 from .forms import UserRegisterForm
-from .models import User
 
 logger = logging.getLogger("custom_logger")
 
 
 # "/user/signup"
-class RegistrationView(View):
+class RegistrationView(NotLoggedInMixin, View):
     template_name = "userauths/signup.html"
     form_class = UserRegisterForm
-
-    def dispatch(self, request: HttpRequest, *args, **kwargs) -> super or redirect:
-        if request.user.is_authenticated:
-            messages.warning(request, "You are already logged in")
-            return redirect("home")
-        return super().dispatch(request, *args, **kwargs)
 
     def get(self, request: HttpRequest) -> render:
         context = {
@@ -51,14 +46,8 @@ class RegistrationView(View):
 
 
 # "/user/login"
-class LogInView(View):
+class LogInView(NotLoggedInMixin, View):
     template_name = "userauths/login.html"
-
-    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
-        if request.user.is_authenticated:
-            messages.warning(request, "You are already logged in")
-            return redirect("home")
-        return super().dispatch(request, *args, **kwargs)
 
     def get(self, request: HttpRequest) -> render:
         return render(request, self.template_name)

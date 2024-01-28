@@ -105,7 +105,7 @@ class KYC(models.Model):
         ordering = ["-updated_at"]
 
     def save(self, *args, **kwargs) -> models.Model:
-        if self.pk:
+        if KYC.objects.filter(pk=self.pk).exists():
             # if updated delete previous pictures
             original_obj = KYC.objects.get(pk=self.pk)
             if original_obj.image and original_obj.image != self.image:
