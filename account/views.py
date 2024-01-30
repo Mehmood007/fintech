@@ -10,6 +10,7 @@ from django.shortcuts import redirect, render
 from django.utils.decorators import method_decorator
 from django.views import View
 
+from core.models import Transaction
 from fintech.utils import KYCExistsMixin
 
 from .forms import KYCForm
@@ -63,3 +64,18 @@ class KYCRegistrationView(View):
             "account": self.account,
         }
         return render(request, "account/kyc-form.html", context)
+
+
+# "/account/dashboard"
+@method_decorator(login_required, name="dispatch")
+class DashboardView(KYCExistsMixin, View):
+    def get(self, request: HttpRequest) -> render:
+        account = Account.objects.get(user=request.user)
+        sender_transaction = Transaction.objects.filter(sender=request.user)
+        receiver_transaction = Transaction.objects.filter(reciever=request.user)
+        context = {
+            "account": account,
+            "sender_transaction": sender_transaction,
+            "receiver_transaction": receiver_transaction,
+        }
+        return render(request, "account/dashboard.html", context)

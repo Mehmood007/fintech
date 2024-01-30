@@ -3,6 +3,8 @@ from django.urls import path
 from .views import (
     AmountTransferView,
     SearchUserView,
+    TransactionDetailsView,
+    TransactionsHistoryView,
     TransferCompletedView,
     TransferConfirmView,
 )
@@ -23,5 +25,15 @@ urlpatterns = [
         "transfer-completed/<int:account_number>/<str:transaction_id>",
         TransferCompletedView.as_view(),
         name="transfer-completed",
+    ),
+    path(
+        "transaction-history",
+        TransactionsHistoryView.as_view(),
+        name="transaction-history",
+    ),
+    path(
+        "transaction-details/<transaction_id>",
+        TransactionDetailsView.as_view(),
+        name="transaction-details",
     ),
 ]

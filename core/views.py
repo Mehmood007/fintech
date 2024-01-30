@@ -151,3 +151,38 @@ class TransferCompletedView(KYCExistsMixin, View):
             "transaction": self.transaction,
         }
         return render(request, "core/transfer-completed.html", context)
+
+
+# "/core/transaction-history"
+@method_decorator(login_required, name="dispatch")
+class TransactionsHistoryView(KYCExistsMixin, View):
+    def get(self, request: HttpRequest) -> render:
+        account = Account.objects.get(user=request.user)
+        sender_transaction = Transaction.objects.filter(sender=request.user).order_by(
+            "-updated_at"
+        )
+        receiver_transaction = Transaction.objects.filter(
+            reciever=request.user
+        ).order_by("-updated_at")
+        context = {
+            "account": account,
+            "sender_transaction": sender_transaction,
+            "receiver_transaction": receiver_transaction,
+        }
+        return render(request, "transaction/transaction-history.html", context)
+
+
+# "/core/transaction-details/<transaction_id>"
+@method_decorator(login_required, name="dispatch")
+class TransactionDetailsView(KYCExistsMixin, View):
+    def get(self, request: HttpRequest, transaction_id: str) -> render:
+        try:
+            transaction = Transaction.objects.get(transaction_id=transaction_id)
+        except:
+            messages.warning(request, "No such transaction exists")
+            return redirect("account")
+
+        context = {
+            "transaction": transaction,
+        }
+        return render(request, "transaction/transaction-details.html", context)

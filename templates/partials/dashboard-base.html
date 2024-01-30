@@ -174,19 +174,19 @@
                         </div>
                         <ul>
                             <li>
-                                <a href="{% url 'account' %}">
+                                <a href="{% url 'dashboard' %}">
                                     <img src="{% static 'assets1/images/icon/dashboard.png' %}" alt="Dashboard">
                                     <span>Dashboard</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="transactions.html">
+                                <a href="{% url 'transaction-history' %}">
                                     <img src="{% static 'assets1/images/icon/transactions.png' %}" alt="Transactions">
                                     <span>Transactions</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="pay.html">
+                                <a href="{% url 'search-user' %}">
                                     <img src="{% static 'assets1/images/icon/pay.png' %}" alt="Pay"> <span>Pay</span>
                                 </a>
                             </li>
