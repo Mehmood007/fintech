@@ -50,7 +50,7 @@ class Account(models.Model):
     account_status = models.CharField(
         max_length=100, choices=ACCOUNT_STATUS, default="in-active"
     )
-    created_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     kyc_submitted = models.BooleanField(default=False)
     kyc_confirmed = models.BooleanField(default=False)
@@ -95,7 +95,7 @@ class KYC(models.Model):
     # Contact Detail
     mobile = models.CharField(max_length=1000)
     fax = models.CharField(max_length=1000)
-    created_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self) -> str:

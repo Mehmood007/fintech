@@ -18,7 +18,8 @@
                                                 <div class="modal-content">
                                                     <div class="modal-header justify-content-between">
                                                         <h5>Transaction Details</h5>
-                                                        <a href="javascript:window.history.back()"><i class="material-symbols-outlined">Back</i></a>
+                                                        <a href="javascript:window.history.back()"><i
+                                                                class="material-symbols-outlined">Back</i></a>
                                                     </div>
                                                     <div class="main-content">
                                                         <div class="row">
@@ -26,11 +27,12 @@
                                                                 <div class="icon-area">
                                                                 </div>
                                                                 <div class="text-area">
-                                                                    
+
                                                                     <h5><b>{{transaction.amount}} USD</b></h5>
                                                                     <p>{{transaction.updated_at|date:"j F Y"}}</p>
-                                                                    <p class="text-success">{{transaction.status|title}}</p>
-                                                                    
+                                                                    <p class="text-success">{{transaction.status|title}}
+                                                                    </p>
+
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-7">
@@ -53,19 +55,23 @@
                                                                     <ul class="payment-info">
                                                                         <li>
                                                                             <p>Payment From</p>
-                                                                            <span class="mdr">Sender: {{transaction.sender.kyc.full_name}}</span>
+                                                                            <span class="mdr">Sender:
+                                                                                {{transaction.sender.kyc.full_name}}</span>
                                                                         </li>
                                                                         <li>
                                                                             <p>Payment To</p>
-                                                                            <span class="mdr">Receiver: {{transaction.reciever.kyc.full_name}}</span>
+                                                                            <span class="mdr">Receiver:
+                                                                                {{transaction.reciever.kyc.full_name}}</span>
                                                                         </li>
                                                                         <li>
                                                                             <p>Payment Description</p>
-                                                                            <span class="mdr">{{transaction.description}}</span>
+                                                                            <span
+                                                                                class="mdr">{{transaction.description}}</span>
                                                                         </li>
                                                                         <li>
                                                                             <p>Transaction ID:</p>
-                                                                            <span class="mdr">{{transaction.transaction_id}}</span>
+                                                                            <span
+                                                                                class="mdr">{{transaction.transaction_id}}</span>
                                                                         </li>
                                                                     </ul>
                                                                 </div>
@@ -81,7 +87,7 @@
                         </div>
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </div>

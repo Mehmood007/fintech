@@ -21,6 +21,7 @@ TRANSACTION_STATUS = (
     ("request_sent", "request_sent"),
     ("request_settled", "request settled"),
     ("request_processing", "request processing"),
+    ("request_declined", "request declined"),
 )
 
 CARD_TYPE = (

@@ -2,11 +2,18 @@ from django.urls import path
 
 from .views import (
     AmountTransferView,
+    DeclineTransferRequestView,
+    DeleteTransferRequestView,
+    RequestAmountTransferView,
+    RequestCompletedView,
+    RequestSearchUserView,
     SearchUserView,
+    SettlementConfirmationView,
     TransactionDetailsView,
     TransactionsHistoryView,
     TransferCompletedView,
     TransferConfirmView,
+    TransferRequestConfirmView,
 )
 
 urlpatterns = [
@@ -35,5 +42,42 @@ urlpatterns = [
         "transaction-details/<transaction_id>",
         TransactionDetailsView.as_view(),
         name="transaction-details",
+    ),
+    # Request Payments
+    path(
+        "request-search-user",
+        RequestSearchUserView.as_view(),
+        name="request-search-user",
+    ),
+    path(
+        "request-amount-transfer/<int:account_number>",
+        RequestAmountTransferView.as_view(),
+        name="request-amount-transfer",
+    ),
+    path(
+        "transfer-request-confirm/<int:account_number>/<str:transaction_id>",
+        TransferRequestConfirmView.as_view(),
+        name="transfer-request-confirm",
+    ),
+    path(
+        "request-completed/<int:account_number>/<str:transaction_id>",
+        RequestCompletedView.as_view(),
+        name="request-completed",
+    ),
+    # Settlements
+    path(
+        "settlement-confirmation/<int:account_number>/<str:transaction_id>",
+        SettlementConfirmationView.as_view(),
+        name="settlement-confirmation",
+    ),
+    path(
+        "delete-request/<transaction_id>",
+        DeleteTransferRequestView.as_view(),
+        name="delete-request",
+    ),
+    path(
+        "decline-request/<transaction_id>",
+        DeclineTransferRequestView.as_view(),
+        name="decline-request",
     ),
 ]
