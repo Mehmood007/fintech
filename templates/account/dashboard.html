@@ -21,13 +21,11 @@
                                     <div class="right-top">
                                         <select>
                                             <option value="1">US Dollar</option>
-                                            <option value="2">US Dollar</option>
-                                            <option value="3">US Dollar</option>
                                         </select>
                                         <div class="dropdown-area">
                                             <button type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
                                                 aria-expanded="false">
-                                                <img src="assets/images/icon/option.png" alt="icon">
+                                                <img src="{% static 'assets/images/icon/option.png' %}" alt="icon">
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                                 <li><a class="dropdown-item" href="#">Fiat Currency</a></li>
@@ -51,7 +49,7 @@
                                     <div class="dropdown-area">
                                         <button type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
                                             aria-expanded="false">
-                                            <img src="assets/images/icon/option.png" alt="icon">
+                                            <img src="{% static 'assets/images/icon/option.png' %}" alt="icon">
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                             <li><a class="dropdown-item" href="recipients.html">Recipients</a></li>
@@ -339,7 +337,7 @@
                                     <div class="dropdown-area">
                                         <button type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
                                             aria-expanded="false">
-                                            <img src="assets/images/icon/option.png" alt="icon">
+                                            <img src="{% static 'assets/images/icon/option.png' %}" alt="icon">
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                             <li><a class="dropdown-item" href="account.html">Update</a></li>
@@ -349,43 +347,66 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-6">
-                                    <div class="single-card">
-                                        <button type="button" class="reg w-100" data-bs-toggle="modal"
-                                            data-bs-target="#cardMod">
-                                            <img src="assets/images/visa-card.png" alt="image" class="w-100">
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="single-card">
-                                        <button type="button" class="reg w-100" data-bs-toggle="modal"
-                                            data-bs-target="#cardMod">
-                                            <img src="assets/images/paylio-card.png" alt="image" class="w-100">
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="single-card">
-                                        <button type="button" class="reg w-100" data-bs-toggle="modal"
-                                            data-bs-target="#cardMod">
-                                            <img src="assets/images/paypal-card.png" alt="image" class="w-100">
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="single-card">
-                                        <button type="button" class="reg w-100" data-bs-toggle="modal"
-                                            data-bs-target="#cardMod">
-                                            <img src="assets/images/blockchain-card.png" alt="image" class="w-100">
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="col-6">
+
+                                {% for c in credit_cards %}
+                                        <a href="{% url 'card-details' c.card_id %}">
+                                            <div class="col-12">
+                                                <div class="card__main">
+                                                    <div class="{% if c.card_type == 'verve' %}Front_card{% endif %}    {% if c.card_type == 'master' %}masterCard{% endif %}    {% if c.card_type == 'visa' %}visaCard{% endif %}">
+                                                    <div class="top_card">
+                                                        <span class="visa">{{c.card_type|upper}}</span>
+                                                        <div class="logo">
+                                                            <img src="{% static 'assets1/images/logo.png' %}" class="logo" alt="logo">
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="middle_card">
+                                                        <span class="chip"></span>
+                                                        <div class="card_number">{{c.number}}</div>
+                                                    </div>
+                                                    <div class="bottom_card">
+                                                        <div class="card_info">
+                                                        <div class="card_holder_name">${{c.amount}}</div>
+                                                        <div class="card_holder_name">{{c.name}}</div>
+                                                        </div>
+                                                        <div class="card_info">
+                                                        <div class="card_holder_info">
+                                                            <span class="expire_month" >{{c.month}}</span>
+                                                            <span class="slash">/</span>
+                                                            <span class="expire_year">{{c.year}}</span>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                    <div class="back_card">
+                                                    <div class="top_card">
+                                                        <span class="black_strip"></span>
+                                                        <div class="cvc_strip">
+                                                        <span class="cvc_number">000</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="bottom_card">
+                                                        <div class="flex">
+                                                        <span class="sticker"></span>
+                                                        <div class="logo1">
+                                                            <span></span>
+                                                            <span></span>
+                                                            <span></span>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    {% endfor %}
+                                
+                                <div class="col-md-4">
                                     <div class="single-card">
                                         <button type="button" class="reg w-100" data-bs-toggle="modal"
                                             data-bs-target="#addcardMod">
-                                            <img src="assets/images/add-new.png" alt="image" class="w-100">
+                                            <img src="{% static 'assets/images/add-new.png' %}" alt="image"
+                                                class="w-100">
                                         </button>
                                     </div>
                                 </div>
@@ -619,35 +640,54 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i
                                         class="fa-solid fa-xmark"></i></button>
                             </div>
-                            <form action="#">
+                            <form method="POST">
+                                {% csrf_token %}
                                 <div class="row justify-content-center">
                                     <div class="col-md-12">
                                         <div class="single-input">
-                                            <label for="cardNumber">Card Number</label>
-                                            <input type="text" id="cardNumber" placeholder="5890 - 6858 - 6332 - 9843">
+                                            <label for="cardNumber">Card name</label>
+                                            <!-- <input type="text" id="cardNumber" placeholder="5890 - 6858 - 6332 - 9843"> -->
+                                            {{form.name}}
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="single-input">
-                                            <label for="cardHolder">Card Holder</label>
-                                            <input type="text" id="cardHolder" placeholder="Alfred Davis">
+                                            <label for="cardNumber">Card Number</label>
+                                            <!-- <input type="text" id="cardNumber" placeholder="5890 - 6858 - 6332 - 9843"> -->
+                                            {{form.number}}
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="single-input">
-                                            <label for="month">Month</label>
-                                            <input type="text" id="month" placeholder="12">
+                                            <label for="cardNumber">Expiry Month</label>
+                                            <!-- <input type="text" id="cardNumber" placeholder="5890 - 6858 - 6332 - 9843"> -->
+                                            {{form.month}}
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="single-input">
-                                            <label for="year">Year</label>
-                                            <input type="text" id="year" placeholder="2025">
+                                            <label for="cardNumber">Expiry Year</label>
+                                            <!-- <input type="text" id="cardNumber" placeholder="5890 - 6858 - 6332 - 9843"> -->
+                                            {{form.year}}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="single-input">
+                                            <label for="cardNumber">CVV</label>
+                                            <!-- <input type="text" id="cardNumber" placeholder="5890 - 6858 - 6332 - 9843"> -->
+                                            {{form.cvv}}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="single-input">
+                                            <label for="cardNumber">Card Type</label>
+                                            <!-- <input type="text" id="cardNumber" placeholder="5890 - 6858 - 6332 - 9843"> -->
+                                            {{form.card_type}}
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="btn-border w-100">
-                                            <button class="cmn-btn w-100">Add Card</button>
+                                            <button type="submit" class="cmn-btn w-100">Add Card</button>
                                         </div>
                                     </div>
                                 </div>

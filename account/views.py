@@ -10,7 +10,8 @@ from django.shortcuts import redirect, render
 from django.utils.decorators import method_decorator
 from django.views import View
 
-from core.models import Transaction
+from core.forms import CreditCardForm
+from core.models import CreditCard, Transaction
 from fintech.utils import KYCExistsMixin
 
 from .forms import KYCForm
@@ -70,12 +71,29 @@ class KYCRegistrationView(View):
 @method_decorator(login_required, name="dispatch")
 class DashboardView(KYCExistsMixin, View):
     def get(self, request: HttpRequest) -> render:
+
         account = Account.objects.get(user=request.user)
         sender_transaction = Transaction.objects.filter(sender=request.user)
         receiver_transaction = Transaction.objects.filter(reciever=request.user)
+        credit_cards = CreditCard.objects.filter(user=request.user).order_by(
+            "-created_at"
+        )
+
+        form = CreditCardForm()
         context = {
             "account": account,
             "sender_transaction": sender_transaction,
             "receiver_transaction": receiver_transaction,
+            "credit_cards": credit_cards,
+            "form": form,
         }
         return render(request, "account/dashboard.html", context)
+
+    def post(self, request: HttpRequest) -> redirect:
+        form = CreditCardForm(request.POST)
+        if form.is_valid():
+            card = form.save(commit=False)
+            card.user = request.user
+            card.save()
+            messages.success(request, "Card added successfully")
+        return redirect(request.get_full_path())

@@ -2,7 +2,11 @@ from django.urls import path
 
 from .views import (
     AmountTransferView,
+    CardDetailsView,
+    CardFundView,
+    CardWithdrawView,
     DeclineTransferRequestView,
+    DeleteCardView,
     DeleteTransferRequestView,
     RequestAmountTransferView,
     RequestCompletedView,
@@ -79,5 +83,26 @@ urlpatterns = [
         "decline-request/<transaction_id>",
         DeclineTransferRequestView.as_view(),
         name="decline-request",
+    ),
+    # Credit Cards
+    path(
+        "card-details/<card_id>",
+        CardDetailsView.as_view(),
+        name="card-details",
+    ),
+    path(
+        "card-fund/<card_id>",
+        CardFundView.as_view(),
+        name="card-fund",
+    ),
+    path(
+        "card-withdraw/<card_id>",
+        CardWithdrawView.as_view(),
+        name="card-withdraw",
+    ),
+    path(
+        "delete-card/<card_id>",
+        DeleteCardView.as_view(),
+        name="delete-card",
     ),
 ]

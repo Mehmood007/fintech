@@ -11,7 +11,7 @@ from django.views import View
 from account.models import Account
 from fintech.utils import KYCExistsMixin
 
-from .models import Transaction
+from .models import CreditCard, Transaction
 
 
 # "core/search-user"
@@ -416,3 +416,68 @@ class DeclineTransferRequestView(KYCExistsMixin, View):
         else:
             messages.warning(request, "Sorry you can not delete this request")
         return redirect("transaction-history")
+
+
+# "core/card-details/<card_id>"
+@method_decorator(login_required, name="dispatch")
+class CardDetailsView(KYCExistsMixin, View):
+    def get(self, request: HttpRequest, card_id: str) -> render:
+        account = Account.objects.get(user=request.user)
+        credit_card = CreditCard.objects.get(card_id=card_id, user=request.user)
+        context = {
+            "account": account,
+            "credit_card": credit_card,
+        }
+        return render(request, "core/card-details.html", context)
+
+
+# "core/card-fund/<card_id>"
+@method_decorator(login_required, name="dispatch")
+class CardFundView(KYCExistsMixin, View):
+    def post(self, request: HttpRequest, card_id: int) -> redirect:
+        credit_card = CreditCard.objects.get(card_id=card_id, user=request.user)
+        account = request.user.account
+
+        amount = request.POST.get("funding_amount")
+
+        if Decimal(amount) <= account.account_balance:
+            account.account_balance -= Decimal(amount)
+            account.save()
+
+            credit_card.amount += Decimal(amount)
+            credit_card.save()
+
+            messages.success(request, "Credit Card funded successfully")
+        else:
+            messages.warning(request, "You dont have enough credit in your account")
+
+        return redirect("card-details", credit_card.card_id)
+
+
+# "core/card-withdraw/<card_id>"
+@method_decorator(login_required, name="dispatch")
+class CardWithdrawView(KYCExistsMixin, View):
+    def post(self, request: HttpRequest, card_id: int) -> redirect:
+        credit_card = CreditCard.objects.get(card_id=card_id, user=request.user)
+
+        amount = request.POST.get("amount")
+
+        if Decimal(amount) <= credit_card.amount:
+
+            credit_card.amount -= Decimal(amount)
+            credit_card.save()
+
+            messages.success(request, "Successfully withdrawn from credit card")
+        else:
+            messages.warning(request, "You dont have enough credit in your account")
+
+        return redirect("card-details", credit_card.card_id)
+
+
+# "core/delete-card/<card_id>"
+@method_decorator(login_required, name="dispatch")
+class DeleteCardView(KYCExistsMixin, View):
+    def get(self, request: HttpRequest, card_id: int):
+        credit_card = CreditCard.objects.get(card_id=card_id, user=request.user)
+        credit_card.delete()
+        return redirect("dashboard")

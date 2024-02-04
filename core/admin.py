@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Transaction
+from .models import CreditCard, Transaction
 
 
 class TransactionAdmin(admin.ModelAdmin):
@@ -15,4 +15,10 @@ class TransactionAdmin(admin.ModelAdmin):
     list_editable = ["amount", "status", "transaction_type", "reciever", "sender"]
 
 
+class CreditCardAdmin(admin.ModelAdmin):
+    list_display = ["user", "amount", "card_type"]
+    list_editable = ["amount", "card_type"]
+
+
 admin.site.register(Transaction, TransactionAdmin)
+admin.site.register(CreditCard, CreditCardAdmin)

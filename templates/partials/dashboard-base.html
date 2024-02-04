@@ -155,7 +155,7 @@
                                     </div>
                                     <ul>
                                         <li class="border-area">
-                                            <a href="account.html"><i class="fas fa-cog"></i>Settings</a>
+                                            <a href="{% url 'account' %}"><i class="fas fa-cog"></i>Settings</a>
                                         </li>
                                         <li>
                                             <a href="{% url 'logout' %}"><i class="fas fa-sign-out"></i>Logout</a>
@@ -170,7 +170,7 @@
                             <i class="fa-solid fa-xmark"></i>
                         </div>
                         <div class="sidebar-logo">
-                            <a href="dashboard.html"><img src="{% static 'assets1/images/logo.png' %}" alt="logo"></a>
+                            <a href="{% url 'dashboard' %}"><img src="{% static 'assets1/images/logo.png' %}" alt="logo"></a>
                         </div>
                         <ul>
                             <li>
@@ -197,34 +197,9 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="money-exchange.html">
-                                    <img src="{% static 'assets1/images/icon/exchange.png' %}" alt="Exchange">
-                                    <span>Exchange</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="recipients.html">
-                                    <img src="{% static 'assets1/images/icon/recipients.png' %}" alt="Recipients">
-                                    <span>Recipients</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="crypto.html">
-                                    <img src="{% static 'assets1/images/icon/crypto.png' %}" alt="Crypto">
-                                    <span>Crypto</span>
-                                </a>
-                            </li>
-                            <li>
                                 <a href="{% url 'search-user' %}">
                                     <img src="{% static 'assets1/images/icon/deposit.png' %}" alt="Deposit">
                                     <span>Deposit Money</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="withdraw-money-step-1.html">
-                                    <img src="{% static 'assets1/images/icon/withdraw.png' %}" alt="Withdraw">
-                                    <span>Withdraw
-                                        Money</span>
                                 </a>
                             </li>
                         </ul>
@@ -236,26 +211,11 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="javascript:void(0)">
-                                    <img src="{% static 'assets1/images/icon/support.png' %}" alt="Support">
-                                    <span>Support</span>
-                                </a>
-                            </li>
-                            <li>
                                 <a href="{% url 'logout' %}">
                                     <img src="{% static 'assets1/images/icon/quit.png' %}" alt="Quit"> <span>Quit</span>
                                 </a>
                             </li>
                         </ul>
-                        <div class="pt-120">
-                            <div class="invite-now">
-                                <div class="img-area">
-                                    <img src="{% static 'assets1/images/invite-now-illus.png' %}" alt="Image">
-                                </div>
-                                <p>Invite your friend and get $25</p>
-                                <a href="javascript:void(0)" class="cmn-btn">Invite Now</a>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 {% include 'partials/alerts.html' %}
